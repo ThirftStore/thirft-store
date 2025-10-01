@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Playfair+Display&display=swap');
+
+:root{
+    --bg: #f2f1f1;
+    --bg-secondary: #d9d9d9;
+    --primary: #485e30;
+    --primary-medium: #758664; 
+    --primary-light: #88a153;
+    --text-primary: #000; 
+    --text-secondary: #737373;
+    --border-color: #e0e0e0;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+body{
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+}
+
+h1, h2{
+    font-family: var(--font-heading);
+}
+
+a, button {
+    text-decoration: none;
+    cursor: pointer;
+}

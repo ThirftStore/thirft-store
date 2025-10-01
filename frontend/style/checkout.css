@@ -1,0 +1,144 @@
+/*basic import and reset*/
+@import 'base.css';
+
+/*main checkout layout*/
+.checkout-container{
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 40px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px 0 ;
+}
+
+/*checkout forms*/
+.checkout-form {
+    padding-right: 20px;
+}
+/*checkout titles*/
+.checkout-form h2 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-top: 10px;
+    padding-bottom: 10px; 
+    border-bottom: 1px solid var(--border-color);
+}
+
+.checkout-step {
+    background: var(--bg-secondary);
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.checkout-step.hidden {
+    display: none;
+}
+
+/*"voltar" and "finalizar" button actions*/
+.checkout-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+.checkout-actions button{
+    margin-top:0;
+}
+
+/*intern forms*/
+#register-form, #address-form {
+    display: flex;
+    flex-direction: column;
+}
+/*inputs labels*/
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+input[type="email"],
+input[type="text"], 
+input[type="number"] {
+    padding: 12px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px; 
+    font-size: 1rem;
+    box-sizing: border-box; 
+}
+
+input:focus {
+    border-color: var(--primary-medium);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--primary-medium);
+}
+
+/*buttons*/
+button {
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none; 
+    border-radius: 4px; 
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+#finish-purchase, .checkout-step button:not([onclick^="prevStep"]){
+    background-color: var(--primary);
+    color: white;
+}
+.checkout-step button[onclick^="prevStep"]{
+    background-color: var(--text-secondary);
+    color: white; 
+}
+/*hover in any button*/
+button:hover{
+    opacity: 0.9;
+}
+
+/*cart summary aside*/
+.cart-summary{
+    background: var(--bg-secondary);
+    padding: 30px; 
+    border: 1px solid var(--border-color); 
+    height: fit-content; 
+}
+
+.cart-summary{
+    font-size: 1.4rem; 
+    margin-top: 80px;
+    margin-bottom: 20px; 
+    text-align:left; 
+}
+
+/*products lists inside summary*/
+#product-list > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.95rem;
+}
+
+.summaary-details hr{
+    border:none;
+    border-top: 1px solid var(--border-color);
+    margin:15px 0;
+}
+
+.summaary-details p{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.summary-details .total{
+    font-size: 1.3rem;
+    font-weight: bold; 
+    color: var(--primary);
+}
