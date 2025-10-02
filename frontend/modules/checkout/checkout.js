@@ -1,7 +1,7 @@
 //settings and data mock
 const MOCK_CART_ITEMS = [
-    {id: 1, name: "Vestido Maria Ipa Cacau", ref: "9334642", price: 65.90, quantity: 1},
-    {id: 2, name: "Vestido Azul Marinho", ref: "9332532", price: 30.00, quantity: 1}
+    {id: 101, name: "Vestido Cacau", ref: "9334642", price: 65.90, quantity: 1},
+    {id: 102, name: "Vestido Azul Marinho", ref: "9332532", price: 30.00, quantity: 1}
 ];
 const FRETE_MOCK = 15.00; 
 

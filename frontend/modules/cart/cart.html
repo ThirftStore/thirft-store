@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../shared/base.css">
+    <link rel="stylesheet" href="./cart.css">
+    <link rel="stylesheet" href="../home/index.css">
+    <title>Meu Carrinho</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <h1>🌸 Florescer</h1>
+        </div>
+        <div class="search-bar">
+            <input type="search" placeholder="O que você está buscando?">
+            <button class="search-button">🔍︎</button>
+        </div>
+        
+        <nav class="user-actions">
+            <a href="#">Atendimento</a>
+            <a href="#">Minha conta</a>
+            <a href="../cart/cart.html" class="cart-icon">🛒 Meu carrinho (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+    <nav class="main-nav">
+        <a href="../home/index.html">Início</a>
+        <a href="#">Produtos</a>
+        <a href="#">Sacolinha</a> 
+        <a href="#">Guia de medidas</a>
+    </nav>
+    <main class="page-content">
+        <h1>Meu Carrinho</h1>
+        
+        <div class="cart-container">
+            <div id="cart-items-container" class="cart-items">
+                </div>
+
+            <div class="cart-summary">
+                <h2>Resumo da Compra</h2>
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Frete:</span>
+                    <span id="frete">GRÁTIS</span>
+                </div>
+                <div class="summary-line total-line">
+                    <h3>Total:</h3>
+                    <h3 id="total">R$ 0,00</h3>
+                </div>
+                
+                <a href="../checkout/checkout.html" class="btn checkout-btn">
+                    Finalizar a Compra
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer class="main-footer">
+        <p>© 2025 Brechó Florescer - Economia Circular 🍃</p>
+    </footer>
+    <script src="./cart.js"></script>
+</body>
+</html>
