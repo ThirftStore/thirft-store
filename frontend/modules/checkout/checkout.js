@@ -1,57 +1,57 @@
 //settings and data mock
 const MOCK_CART_ITEMS = [
-    {id: 101, name: "Vestido Cacau", ref: "9334642", price: 65.90, quantity: 1},
-    {id: 102, name: "Vestido Azul Marinho", ref: "9332532", price: 30.00, quantity: 1}
+    { id: 101, name: "Vestido Cacau", ref: "9334642", price: 65.90, quantity: 1 },
+    { id: 102, name: "Vestido Azul Marinho", ref: "9332532", price: 30.00, quantity: 1 }
 ];
-const FRETE_MOCK = 15.00; 
+const FRETE_MOCK = 15.00;
 
 // format for BRL coin
-function formatCurrency(value){
+function formatCurrency(value) {
     return `R$ ${value.toFixed(2).replace('.', ',')}`;
 }
 
 //track the step 
-let currentStep = 1; 
+let currentStep = 1;
 
 /**
  * move forward or back to a specif checkout step.
  * @param {number} stepNumber step number to be display.
  */
 
-function navigateStep(stepNumber){ 
+function navigateStep(stepNumber) {
     // garantee a valid number
-    if(stepNumber < 1 || stepNumber > 4) return; 
+    if (stepNumber < 1 || stepNumber > 4) return;
 
     //hidden all steps
     document.querySelectorAll('.checkout-step').forEach(step => {
         step.classList.remove('active');
         step.classList.add('hidden');
-    }); 
-    
+    });
+
     //show the desired step
     const nextStepElement = document.getElementById(`step-${stepNumber}`);
-    if(nextStepElement){
+    if (nextStepElement) {
         nextStepElement.classList.remove('hidden');
-        nextStepElement.classList.add('active'); 
+        nextStepElement.classList.add('active');
         currentStep = stepNumber;
     }
 }
 
 // functions to html navigation
-window.nextStep = (current) => navigateStep(current + 1);
-window.prevStep = (current) => navigateStep(current - 1);
+window.nextStep = (stepNumber) => navigateStep(stepNumber);
+window.prevStep = (stepNumber) => navigateStep(stepNumber);
 
 
 // cart summary logic
 
-function renderCartSummary(){
+function renderCartSummary() {
     const productListElement = document.getElementById('product-list');
     const subtotalElement = document.getElementById('subtotal');
     const shipmentElement = document.getElementById('shipment');
     const totalElement = document.getElementById('total');
-    
+
     let subtotal = 0;
-    
+
     productListElement.innerHTML = '';
 
     MOCK_CART_ITEMS.forEach(item => {
@@ -67,7 +67,7 @@ function renderCartSummary(){
         productListElement.appendChild(itemElement);
     });
 
-    const total = subtotal + FRETE_MOCK; 
+    const total = subtotal + FRETE_MOCK;
 
     //update values from sidebar 
     subtotalElement.textContent = formatCurrency(subtotal);
@@ -77,24 +77,20 @@ function renderCartSummary(){
 
 
 // prepare and send datas to api
-
-function collectOrderData(){
-    // client data
-    const registerForm = document.getElementById('register-form');
+function collectOrderData() {
     const userData = {
-        email: registerForm.querySelector('#email').value,
-        fullName: registerForm.querySelector('#nome').value,
-        cpf: registerForm.querySelector('#cpf').value,
-    }; 
+        email: document.getElementById('email').value,
+        fullName: document.getElementById('nome').value,
+        cpf: document.getElementById('cpf').value,
+    };
 
-    // address data
-    const addressForm = document.getElementById('address-form');
+    
     const addressData = {
-        street: addressForm.querySelector('#rua').value,
-        number: addressForm.querySelector('#numero').value,
-        complement: addressForm.querySelector('#complemento').value,
-        sector: addressForm.querySelector('#setor').value,
-        adminRegion: addressForm.querySelector('#regAdmin').value,
+        street: document.getElementById('rua').value,
+        number: document.getElementById('numero').value,
+        complement: document.getElementById('complemento').value,
+        sector: document.getElementById('setor').value,
+        adminRegion: document.getElementById('regAdmin').value,
     };
 
     //delivery and payment data 
@@ -102,7 +98,6 @@ function collectOrderData(){
     const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
 
     if (!deliveryMethod || !paymentMethod) {
-        // simple validation
         alert('Por favor, selecione uma forma de entrega e pagamento.');
         return null;
     }
@@ -113,47 +108,84 @@ function collectOrderData(){
         shippingAddress: addressData,
         deliveryMethod: deliveryMethod,
         paymentMethod: paymentMethod,
-        
-        // Items and total : use for API verification
         items: MOCK_CART_ITEMS.map(item => ({
-            productId: item.id || 0, // Add a real ID in the API
+            productId: item.id || 0,
             quantity: item.quantity,
             price: item.price
         })),
         subtotal: MOCK_CART_ITEMS.reduce((sum, item) => sum + item.price * item.quantity, 0),
         shipmentCost: FRETE_MOCK,
         totalAmount: MOCK_CART_ITEMS.reduce((sum, item) => sum + item.price * item.quantity, 0) + FRETE_MOCK
-    }; 
-    return orderPayload; 
+    };
+    return orderPayload;
 }
+
 
 
 // initialization and main purchase function
 
-function finishPurchase(event){
-    event.preventDefault(); //prevent default html form submission
+async function finishPurchase(event) {
+    console.log("DETETIVE 5: O BOTÃO FOI CLICADO! A função finishPurchase foi chamada."); // <-- Nosso detetive
+    event.preventDefault(); // Impede o recarregamento da página
 
     const orderData = collectOrderData();
 
-    if(!orderData){
+    if (!orderData) {
         console.error("Dados do pedido incompletos.");
         return;
     }
+ 
+    const payloadParaAPI = {
+        email: orderData.clientData.email,
+        nome: orderData.clientData.fullName,
+        cpf: orderData.clientData.cpf,
+        rua: orderData.shippingAddress.street,
+        numero: orderData.shippingAddress.number,
+        complemento: orderData.shippingAddress.complement,
+        setor: orderData.shippingAddress.sector,
+        regAdmin: orderData.shippingAddress.adminRegion
+    };
 
-    console.log("Dados prontos para envio (JSON Payload):", orderData);
-    
-    // --- INTEGRAR A CHAMADA FETCH AQUI QUANDO A API JAVA ESTIVER PRONTA ---
+    console.log("Dados adaptados e prontos para envio:", payloadParaAPI);
 
-    alert('Compra Finalizada com Sucesso! (Dados capturados no console.)');
+    try {
+        const response = await fetch('http://localhost:8080/api/cadastro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payloadParaAPI)
+        });
+
+        const responseData = await response.text();
+
+        if (response.ok) {
+            alert(responseData);
+        } else {
+            alert('Ocorreu um erro: ' + responseData);
+        }
+
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        alert('Falha na comunicação com o servidor. Verifique se a API está rodando.');
+    }
 }
 
-// Event listener for to start everuthing when the page
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("--- INICIANDO DIAGNÓSTICO ---");
+    console.log("DETETIVE 1: A página HTML terminou de carregar (DOMContentLoaded).");
+
     renderCartSummary();
     navigateStep(1);
 
     const finishButton = document.getElementById('finish-purchase');
-    if(finishButton){
+    console.log("DETETIVE 2: Procurando o botão com id='finish-purchase'. Botão encontrado:", finishButton);
+
+    if (finishButton) {
+        console.log("DETETIVE 3: O botão foi encontrado! Adicionando o 'ouvinte' de clique.");
         finishButton.addEventListener('click', finishPurchase);
+    } else {
+        console.error("DETETIVE 4 (ERRO): Não foi possível encontrar o botão com id='finish-purchase' no seu HTML!");
     }
+    console.log("--- FIM DO DIAGNÓSTICO INICIAL ---");
 });

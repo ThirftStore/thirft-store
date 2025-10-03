@@ -1,5 +1,5 @@
 /*basic import and reset*/
-@import 'base.css';
+@import url('../../shared/base.css');
 
 /*main checkout layout*/
 .checkout-container{
@@ -33,7 +33,7 @@
 }
 
 .checkout-step.hidden {
-    display: none;
+    display: none !important;
 }
 
 /*"voltar" and "finalizar" button actions*/
@@ -48,8 +48,8 @@
 }
 
 /*intern forms*/
-#register-form, #address-form {
-    display: flex;
+#step-1, #step-3 {
+    display: flex; 
     flex-direction: column;
 }
 /*inputs labels*/
@@ -141,4 +141,8 @@ button:hover{
     font-size: 1.3rem;
     font-weight: bold; 
     color: var(--primary);
+}
+
+#main-checkout-form {
+    display: contents;
 }
