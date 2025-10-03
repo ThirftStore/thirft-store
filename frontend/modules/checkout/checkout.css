@@ -1,5 +1,5 @@
-/*basic import and reset*/
 @import url('../../shared/base.css');
+@import url('../../shared/layout.css');
 
 /*main checkout layout*/
 .checkout-container{
@@ -79,16 +79,6 @@ input:focus {
 }
 
 /*buttons*/
-button {
-    padding: 12px 20px;
-    margin-top: 20px;
-    border: none; 
-    border-radius: 4px; 
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: background-color 0.3s;
-}
-
 #finish-purchase, .checkout-step button:not([onclick^="prevStep"]){
     background-color: var(--primary);
     color: white;
