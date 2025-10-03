@@ -18,6 +18,13 @@ public class CadastroDTO {
     @Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres")
     private String senha;
 
+    public String getSenha() {
+        return senha;
+    }
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     @NotBlank(message = "O campo nome é obrigatório")
     private String nome;
 

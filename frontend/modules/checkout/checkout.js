@@ -138,7 +138,7 @@ async function finishPurchase(event) {
  
     const payloadParaAPI = {
         email: orderData.clientData.email,
-        senha: orderData.clientData.password,
+        senha: document.getElementById('password').value,
         nome: orderData.clientData.fullName,
         cpf: orderData.clientData.cpf,
         rua: orderData.shippingAddress.street,

@@ -9,17 +9,26 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Cliente {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
-    private String email; 
-    private String senha;  
+    private String email;
     private String cpf;
+    @Column(name = "senha", nullable = false)
+    private String senha;
 
-    @OneToOne(cascade = CascadeType.ALL) 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
 
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;

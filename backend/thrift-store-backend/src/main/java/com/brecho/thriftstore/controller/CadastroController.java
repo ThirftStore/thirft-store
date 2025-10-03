@@ -1,52 +1,45 @@
-package com.brecho.thriftstore.controller;
-
+package com.brecho.thriftstore.controller; 
 
 import com.brecho.thriftstore.dto.CadastroDTO;
 import com.brecho.thriftstore.model.Cliente;
-import com.brecho.thriftstore.model.Endereco;
 import com.brecho.thriftstore.repository.ClienteRepository;
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder; 
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/cadastro")
 public class CadastroController {
 
+    private final ClienteRepository clienteRepository;
+    private final PasswordEncoder passwordEncoder; 
+
+    
     @Autowired
-    private ClienteRepository clienteRepository;
+    public CadastroController(ClienteRepository clienteRepository, PasswordEncoder passwordEncoder) { // <-- MUDANÇA AQUI
+        this.clienteRepository = clienteRepository;
+        this.passwordEncoder = passwordEncoder; 
+    }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> realizarCadastro(@RequestBody @Valid CadastroDTO dados) {
+    public ResponseEntity<String> cadastrar(@RequestBody CadastroDTO cadastroDTO) {
         
-        Endereco endereco = new Endereco();
-        endereco.setRua(dados.getRua());
-        endereco.setNumero(dados.getNumero());
-        endereco.setComplemento(dados.getComplemento());
-        endereco.setSetor(dados.getSetor());
-        endereco.setRegAdmin(dados.getRegAdmin());
-
-        Cliente cliente = new Cliente();
-        cliente.setNome(dados.getNome());
-        cliente.setEmail(dados.getEmail());
-
-        cliente.setSenha(dados.getSenha());
+        Cliente novoCliente = new Cliente();
+        novoCliente.setNome(cadastroDTO.getNome());
+        novoCliente.setEmail(cadastroDTO.getEmail());
+        novoCliente.setCpf(cadastroDTO.getCpf());
         
-        cliente.setCpf(dados.getCpf());
+
+       
+        String senhaCriptografada = passwordEncoder.encode(cadastroDTO.getSenha());
+        novoCliente.setSenha(senhaCriptografada);
         
-        cliente.setEndereco(endereco);
 
-        clienteRepository.save(cliente);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cadastro realizado com sucesso!");
+        clienteRepository.save(novoCliente);
+        return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 }
