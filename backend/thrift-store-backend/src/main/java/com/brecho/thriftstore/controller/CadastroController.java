@@ -38,6 +38,9 @@ public class CadastroController {
         Cliente cliente = new Cliente();
         cliente.setNome(dados.getNome());
         cliente.setEmail(dados.getEmail());
+
+        cliente.setSenha(dados.getSenha());
+        
         cliente.setCpf(dados.getCpf());
         
         cliente.setEndereco(endereco);

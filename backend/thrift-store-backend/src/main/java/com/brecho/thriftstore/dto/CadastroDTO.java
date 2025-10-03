@@ -14,6 +14,10 @@ public class CadastroDTO {
     @Email(message = "O formato do e-mail é inválido")
     private String email;
 
+    @NotBlank(message = "O campo senha é obrigatório")
+    @Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres")
+    private String senha;
+
     @NotBlank(message = "O campo nome é obrigatório")
     private String nome;
 

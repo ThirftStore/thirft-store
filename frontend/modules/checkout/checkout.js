@@ -80,6 +80,7 @@ function renderCartSummary() {
 function collectOrderData() {
     const userData = {
         email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
         fullName: document.getElementById('nome').value,
         cpf: document.getElementById('cpf').value,
     };
@@ -137,6 +138,7 @@ async function finishPurchase(event) {
  
     const payloadParaAPI = {
         email: orderData.clientData.email,
+        senha: orderData.clientData.password,
         nome: orderData.clientData.fullName,
         cpf: orderData.clientData.cpf,
         rua: orderData.shippingAddress.street,
