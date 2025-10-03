@@ -85,7 +85,7 @@ O projeto segue uma arquitetura robusta no backend e módulos bem definidos no f
 - **`LICENSE`**: arquivo de licença do projeto. 
 
 ## 🤝 Colaborando 
-Fique à vontade para contribuir com ideias, reportar bugs ou enviar melhorias! Se quiser colaborar com o projeto, entre em contato com as colaboradoras ou envia um __Pull Resquest_ para a branch ``develop``. 
+Fique à vontade para contribuir com ideias, reportar bugs ou enviar melhorias! Se quiser colaborar com o projeto, entre em contato com as colaboradoras ou envia um _Pull Resquest_ para a branch ``develop`` ou ``bugfix``.
 
 ## 📄 Licença 
 Este projeto está sob a licença MIT - veja o arquivo **[LICENSE](./License)** para detalhes. 
