@@ -85,7 +85,7 @@ function collectOrderData() {
         cpf: document.getElementById('cpf').value,
     };
 
-    
+
     const addressData = {
         street: document.getElementById('rua').value,
         number: document.getElementById('numero').value,
@@ -135,7 +135,7 @@ async function finishPurchase(event) {
         console.error("Dados do pedido incompletos.");
         return;
     }
- 
+
     const payloadParaAPI = {
         email: orderData.clientData.email,
         senha: document.getElementById('password').value,
@@ -151,7 +151,7 @@ async function finishPurchase(event) {
     console.log("Dados adaptados e prontos para envio:", payloadParaAPI);
 
     try {
-        const response = await fetch('http://localhost:8080/api/cadastro', {
+        const response = await fetch('http://localhost:8080/api/clientes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -159,15 +159,23 @@ async function finishPurchase(event) {
             body: JSON.stringify(payloadParaAPI)
         });
 
-        const responseData = await response.text();
+
+        const responseData = await response.json();
 
         if (response.ok) {
-            alert(responseData);
+
+            console.log('Cliente cadastrado com sucesso:', responseData);
+            alert('Cadastro realizado com sucesso!');
+
+
+
         } else {
-            alert('Ocorreu um erro: ' + responseData);
+
+            alert('Ocorreu um erro: ' + (responseData.message || JSON.stringify(responseData)));
         }
 
     } catch (error) {
+
         console.error('Erro na requisição:', error);
         alert('Falha na comunicação com o servidor. Verifique se a API está rodando.');
     }
