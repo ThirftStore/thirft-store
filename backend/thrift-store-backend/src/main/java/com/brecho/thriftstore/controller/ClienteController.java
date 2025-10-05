@@ -9,34 +9,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clientes") // Endpoint base para todos os métodos de cliente
+@RequestMapping("/api/clientes")
 @CrossOrigin(origins = "*")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
-    // C - Create (o nosso antigo cadastro)
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente cliente) {
         return clienteService.createCliente(cliente);
     }
 
-    // R - Read (buscar todos)
     @GetMapping
     public List<Cliente> getAllClientes() {
         return clienteService.getAllClientes();
     }
 
-    // R - Read (buscar por ID)
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
-        return clienteService.getClienteById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Cliente cliente = clienteService.getClienteById(id);
+        return ResponseEntity.ok(cliente);
     }
 
-    // U - Update
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
         try {
@@ -47,7 +42,6 @@ public class ClienteController {
         }
     }
 
-    // D - Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
         clienteService.deleteCliente(id);
